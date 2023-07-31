@@ -1,6 +1,6 @@
 # xnft-quickstart
 
-Quickstart repo for building your own xNFT.
+Quickstart repo for building our xMNFT.
 
 ## Developing
 
@@ -26,10 +26,9 @@ yarn dev
 
 ### Open the Simulator in Backpack
 
-Now that you have your xNFT dev server running, open it in the Backpack simulator to see it run.
+Now that you have our xNFT dev server running, open it in the Backpack simulator to see it run.
 
 That's it!
-
 
 ## Build & Publish
 
@@ -44,5 +43,3 @@ Test the newly created build in `dist/index.html` in the simulator:
 ```
 yarn start
 ```
-
-Once everything looks good head over to [xnft.gg](https://www.xnft.gg) to publish your xNFT!
