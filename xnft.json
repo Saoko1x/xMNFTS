@@ -1,16 +1,17 @@
 {
-  "name": "xNFT Quickstart",
+  "name": "xMNFTS",
   "version": "0.0.1",
-  "storage": "",
-  "description": "React Native Example",
-  "website": "http://wao.gg",
+  "storage": "ipfs",
+  "description": "The best way to listen your music",
+  "website": "https://music-market-web3.vercel.app/",
   "kind": "app",
   "icon": {
     "md": "./assets/icon.png"
   },
-  "contact": "",
+  "contact": 
+   "https://github.com/NathanLazo/music-market-web3",
   "screenshots": [
-    "./assets/screenShot.png"
+    "./assets/super.png", "./assets/mega.png"
   ],
   "entrypoints": {
     "default": {
