@@ -7,27 +7,33 @@ import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { useFonts, Inter_900Black } from "@expo-google-fonts/dev";
 import { HomeScreen } from "./screens/HomeScreen";
 import { AudioScreen } from "./screens/AudioScreen";
-import tailwind from "twrnc";
-import { useState, useEffect, useRef } from "react";
-import toast, { useToaster } from "react-hot-toast";
-import Constants from "expo-constants";
+import { useState } from "react";
+import { set } from "@coral-xyz/anchor/dist/cjs/utils/features";
 
 const Tab = createBottomTabNavigator();
 
 function TabNavigator() {
   const [selectedSong, setSelectedSong] = useState("");
-  console.log(selectedSong);
+  const [selectedName, setSelectedName] = useState("");
+  const [selectedImage, setSelectedImage] = useState("");
+
   return (
     <>
       <Tab.Navigator
         initialRouteName='Home'
         screenOptions={{
-          tabBarActiveTintColor: "#e91e63",
+          tabBarActiveTintColor: "#A084E8",
         }}
       >
         <Tab.Screen
           name='Home'
-          children={() => <HomeScreen setSelectedSong={setSelectedSong} />}
+          children={() => (
+            <HomeScreen
+              setSelectedSong={setSelectedSong}
+              setSelectedName={setSelectedName}
+              setSelectedImage={setSelectedImage}
+            />
+          )}
           options={{
             tabBarLabel: "Home",
             tabBarIcon: ({ color, size }) => (
@@ -37,8 +43,14 @@ function TabNavigator() {
           initialParams={{ setSelectedSong }}
         />
         <Tab.Screen
-          name='Audio Player'
-          children={() => <AudioScreen selectedSong={selectedSong} />}
+          name='AudioPlayer'
+          children={() => (
+            <AudioScreen
+              selectedSong={selectedSong}
+              selectedName={selectedName}
+              selectedImage={selectedImage}
+            />
+          )}
           options={{
             tabBarLabel: "Player",
             tabBarIcon: ({ color, size }) => (

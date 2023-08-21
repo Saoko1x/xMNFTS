@@ -1,10 +1,18 @@
-import { Pressable, View, Text, Image } from "react-native";
+import { Pressable, View, Text, Image, ImageBackground } from "react-native";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import tailwind from "twrnc";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import ReactPlayer from "react-player";
 
-export const AudioScreen = ({ selectedSong }: { selectedSong: string }) => {
+export const AudioScreen = ({
+  selectedSong,
+  selectedName,
+  selectedImage,
+}: {
+  selectedSong: string;
+  selectedName: string;
+  selectedImage: string;
+}) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const [seekTime, setSeekTime] = useState(0);
@@ -43,119 +51,115 @@ export const AudioScreen = ({ selectedSong }: { selectedSong: string }) => {
       .toString()
       .padStart(2, "0")}`;
   };
+  const bgColor = "#141124";
+  const playButtonColor = isPlaying ? "#fff" : bgColor;
 
   return (
-    <View>
-      <View
-        style={tailwind`flex flex-wrap justify-center items-center mt-10 mb-10 p-5`}
-      >
-        <Image
-          source={{
-            uri: "https://static.vecteezy.com/system/resources/previews/009/384/065/original/audio-cassette-tape-clipart-design-illustration-free-png.png",
-          }}
-          style={tailwind`w-full h-64 rounded-t-xl md:w-1/2 md:h-64`}
-        />
-      </View>
-      <ReactPlayer
-        ref={playerRef}
-        url={selectedSong}
-        controls={false}
-        onPlay={() => console.log("onPlay")}
-        playing={isPlaying}
-        loop={isLooping}
-        width='100%'
-        height='10%'
-        onProgress={(progress) => {
-          setSeekTime(progress.playedSeconds);
-        }}
-      />
-      <View style={tailwind`flex flex-row justify-center items-center`}>
-        <Text>{formatTime(seekTime)}</Text>
-        <input
-          type='range'
-          style={tailwind`w-1/2`}
-          value={seekTime}
-          min={0}
-          max={playerRef.current ? playerRef.current.getDuration() : 0}
-          step={0.0}
-          onChange={(e) => handleSeekChange(parseFloat(e.target.value))}
-        />
-        <Text>
-          {playerRef.current && formatTime(playerRef.current.getDuration())}
-        </Text>
-      </View>
-      <View style={tailwind`flex flex-row justify-center items-center`}>
-        <button id='shuffleButton' style={tailwind`border-transparent`}>
+    <ImageBackground
+      source={{
+        uri: selectedImage,
+      }}
+      style={tailwind`flex-1`}
+      imageStyle={tailwind`absolute inset-0 m-0 p-0`}
+      resizeMode='cover'
+      blurRadius={40}
+    >
+      <View style={tailwind`flex-1 `}>
+        <View
+          style={tailwind`flex flex-wrap justify-center items-center mt-10 p-5`}
+        >
+          <Image
+            source={{
+              uri: selectedImage,
+            }}
+            style={tailwind`w-full h-64 rounded-md`}
+          />
+          <Text style={tailwind`mt-2 text-center text-xl font-bold text-white`}>
+            {selectedName}
+          </Text>
+        </View>
+        <View style={tailwind`justify-center items-center `}>
+          <ReactPlayer
+            ref={playerRef}
+            url={selectedSong}
+            controls={false}
+            playing={isPlaying}
+            loop={isLooping}
+            width='100%'
+            height='70%'
+            onProgress={(progress) => {
+              setSeekTime(progress.playedSeconds);
+            }}
+          />
+        </View>
+        <View style={tailwind`flex flex-row justify-center items-center`}>
+          <Text style={tailwind`text-white`}>{formatTime(seekTime)}</Text>
+          <input
+            type='range'
+            style={tailwind`w-1/2`}
+            value={seekTime}
+            min={0}
+            max={playerRef.current ? playerRef.current.getDuration() : 0}
+            step={0.0}
+            onChange={(e) => handleSeekChange(parseFloat(e.target.value))}
+          />
+          <Text style={tailwind`text-white`}>
+            {playerRef.current && formatTime(playerRef.current.getDuration())}
+          </Text>
+        </View>
+        <View style={tailwind`flex flex-row justify-center items-center`}>
           <Pressable
-            style={({ pressed }) => [
-              tailwind`bg-[#3F4754] h-12 px-6 items-center justify-center rounded-full`,
-              pressed ? tailwind`bg-[#647187]` : null,
-            ]}
+            id='shuffleButton'
+            style={tailwind`border-transparent text-white rounded-full overflow-hidden px-6`}
           >
-            <Text style={tailwind`text-white font-bold text-base`}>
-              <MaterialCommunityIcons name='shuffle' size={15} />
-            </Text>
+            <MaterialCommunityIcons name='shuffle' size={25} color='white' />
           </Pressable>
-        </button>
-        <button id='backwardButton' style={tailwind`border-transparent`}>
           <Pressable
+            id='backwardButton'
+            style={tailwind`border-transparent text-white rounded-full overflow-hidden px-6`}
             onPress={handleBackwardButtonClick}
-            style={({ pressed }) => [
-              tailwind`bg-[#3F4754] h-12 px-6 items-center justify-center rounded-full`,
-              pressed ? tailwind`bg-[#647187]` : null,
-            ]}
           >
-            <Text style={tailwind`text-white font-bold text-base`}>
-              <MaterialCommunityIcons name='step-backward' size={15} />
-            </Text>
+            <MaterialCommunityIcons
+              name='step-backward'
+              size={25}
+              color='white'
+            />
           </Pressable>
-        </button>
-        <button id='playButton' style={tailwind`border-transparent`}>
           <Pressable
+            id='playButton'
+            style={tailwind`border-transparent rounded-full bg-white overflow-hidden`}
             onPress={handlePlayButtonClick}
-            style={({ pressed }) => [
-              tailwind`bg-[#CC6B49] h-12 px-6 items-center justify-center rounded-full`,
-              pressed ? tailwind`bg-[#7a3f2b]` : null,
-            ]}
           >
-            <Text style={tailwind`text-white font-bold text-base`}>
-              <MaterialCommunityIcons
-                name={isPlaying ? "pause" : "play"}
-                size={15}
-              />
-            </Text>
+            <MaterialCommunityIcons
+              name={isPlaying ? "pause" : "play"}
+              size={37}
+              style={tailwind`items-center justify-center`}
+            />
           </Pressable>
-        </button>
-        <button id='backwardButton' style={tailwind`border-transparent`}>
           <Pressable
+            id='forwardButton'
+            style={tailwind`border-transparent text-white rounded-full overflow-hidden px-6`}
             onPress={handleForwardButtonClick}
-            style={({ pressed }) => [
-              tailwind`bg-[#3F4754] h-12 px-6 items-center justify-center rounded-full`,
-              pressed ? tailwind`bg-[#647187]` : null,
-            ]}
           >
-            <Text style={tailwind`text-white font-bold text-base`}>
-              <MaterialCommunityIcons name='step-forward' size={15} />
-            </Text>
+            <MaterialCommunityIcons
+              name='step-forward'
+              size={25}
+              color='white'
+            />
           </Pressable>
-        </button>
-        <button id='repeatButton' style={tailwind`border-transparent`}>
           <Pressable
+            id='repeatButton'
+            style={tailwind`border-transparent text-white rounded-full overflow-hidden px-6`}
             onPress={handleLoopButtonClick}
-            style={({ pressed }) => [
-              tailwind`bg-[#3F4754] h-12 px-6 items-center justify-center rounded-full`,
-              pressed ? tailwind`bg-[#647187]` : null,
-            ]}
           >
-            <Text style={tailwind`text-white font-bold text-base`}>
-              <MaterialCommunityIcons
-                name={isLooping ? "repeat-once" : "repeat"}
-                size={15}
-              />
-            </Text>
+            <MaterialCommunityIcons
+              name={isLooping ? "repeat-once" : "repeat"}
+              size={25}
+              color={isLooping ? "green" : "white"}
+            />
           </Pressable>
-        </button>
+        </View>
       </View>
-    </View>
+    </ImageBackground>
   );
 };
