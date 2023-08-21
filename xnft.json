@@ -1,6 +1,6 @@
 {
-  "name": "xMNFTS",
-  "version": "0.0.1",
+  "name": "Mixhub!",
+  "version": "0.0.2",
   "storage": "ipfs",
   "description": "The best way to listen your music",
   "website": "https://music-market-web3.vercel.app/",
@@ -11,7 +11,7 @@
   "contact": 
    "https://github.com/NathanLazo/music-market-web3",
   "screenshots": [
-    "./assets/super.png", "./assets/mega.png"
+    "./assets/one.png", "./assets/two.png", "./assets/three.png", "./assets/four.png"
   ],
   "entrypoints": {
     "default": {

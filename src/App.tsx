@@ -20,13 +20,13 @@ function TabNavigator() {
   return (
     <>
       <Tab.Navigator
-        initialRouteName='Home'
+        initialRouteName='Mixhub'
         screenOptions={{
           tabBarActiveTintColor: "#A084E8",
         }}
       >
         <Tab.Screen
-          name='Home'
+          name='Mixhub'
           children={() => (
             <HomeScreen
               setSelectedSong={setSelectedSong}
