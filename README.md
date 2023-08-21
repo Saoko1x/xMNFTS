@@ -1,4 +1,4 @@
-# xnft-quickstart
+# Mixhub Quickstart
 
 Quickstart repo for building our xMNFT.
 
